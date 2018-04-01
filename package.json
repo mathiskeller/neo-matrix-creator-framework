@@ -1,0 +1,29 @@
+{
+  "name": "matrix-creator-node-framework",
+  "version": "0.1.0",
+  "description": "Matrix Creator Node Framework makes it easy to set up your own Matrix Creator project using Node.js.",
+  "keywords": [
+    "Internet of Things",
+    "Smart Home",
+    "Smart Home Assistant",
+    "Text to Speech",
+    "Raspberry PI",
+    "Matrix Creator Board"
+  ],
+  "author": "Mathis Keller <mk@mathiskeller.de> (http://mathiskeller.de)",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mathiskeller/matrix-creator-node-framework.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-es": "^0.9.1"
+  },
+  "dependencies": {
+    "buntstift": "^1.1.0",
+    "matrix-protos": "0.0.21",
+    "node-hue-api": "^2.4.2",
+    "zmq": "^2.15.3"
+  }
+}

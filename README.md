@@ -4,44 +4,32 @@ Matrix Creator Node Framework makes it easy to set up your own Matrix Creator pr
 
 
 
-**The Framework includes modules to ...**
+**You can use this framework to ...**
 
 - access the GPIO Pins (Setup and Read Input and Output Pins)
 - control the Everloop (Fade and Switch LEDs by using a Light Array)
 - read and configure the Humidity, IMU, Uv and Pressure sensors
-- access the Microphone Array
+- TODO: access the Microphone Array
 
 
 
 
-**Requirements**
-
-To use this Framework you need ...
-
-- to install the [Matrix Core Software](https://matrix-io.github.io/matrix-documentation/matrix-core/) (you can find a documentation on how to do this [here](https://matrix-io.github.io/matrix-documentation/matrix-core/getting-started/installation/)).
+**To use this Framework you need ...**
+- a Matrix Creator Board
 - a Raspberry PI where Node.js is installed.
+- to install the [Matrix Core Software](https://matrix-io.github.io/matrix-documentation/matrix-core/) (you can find a documentation on how to do this [here](https://matrix-io.github.io/matrix-documentation/matrix-core/getting-started/installation/)).
 
 
 
 
 ## Installation
 
+This framework is using [ZMQ](https://www.npmjs.com/package/zmq), make sure you follow the instructions on how to install ZMQ on your computer.
+
 Install via npm directly from GitHub
+
 ```
 npm install git+https://github.com/mathiskeller/matrix-creator-node-framework
-```
-
-Clone from GitHub
-```
-git clone https://github.com/mathiskeller/matrix-creator-node-framework
-```
-
-
-
-Open the Terminal, navigate to your project folder and run npm install
-```
-cd <PROJECT_FOLDER>
-npm install
 ```
 
 You're now ready to start coding your own project.
@@ -50,37 +38,34 @@ You're now ready to start coding your own project.
 
 ## Quickstart
 
-Use the index.js file as the entry point of your software. Here you can integrate the modules you want to use in your project and write your code.
-
-To integrate the modules write:
+To use this package require it at the top of your project file.
 
 ```Javascript
-const Everloop = require('./modules/creator/everloop');
-const Gpio = require('./modules/creator/gpio');
+const Creator = require('matrix-creator-node-framework');
 ...
 ```
 
-All modules you use need to be initialized.
+All modules you want use need to be initialized:
 
 ```javascript
-const everloop = new Everloop();
-const gpio = new Gpio();
+const everloop = new Creator.Everloop();
+const gpio = new Creator.Gpio();
 ...
 ```
 
-Optionally you can define custom options. For example the IP address if you want to access the matrix creator from another device.
+Optionally you can define custom options. For example the IP address if you want to access the matrix creator from another device:
 
 ```
-const gpio = new Gpio({
+const gpio = new Creator.Gpio({
     ip: '<MATRIX_CREATOR_IP>'
 });
 ```
 
-The complete list of options can be found in the specific modules readme file.
+You can detail information about the available options for each module in the [docs](./docs/)
 
 
 
-#### Using the modules
+#### Using the single modules
 
 Every module (except the everloop module) comes with an integrated event emitter. To use a module you need to substribe to the events.
 
@@ -105,16 +90,20 @@ gpio.on('light-switch', state => {
 });
 ```
 
-You can find a List on how to subscribe to the single modules [here](./modules/creator/Modules.md)
+You can detail information about this in the [docs](./docs/)
 
 
 
-### Using the config file
+## Setting up a config file
 
-You can customize the configuration by renaiming `config.tpl.js` to `config.js` and integrate it to your **index.js** with following command.
+You can customize the configuration by copying and renaming `config.tpl.js` to `config.js` and integrate it to your project-file using following code:
 
 ```javascript
-const Config = require('./config');
+const Config = require('<PATH-TO-CONFIG-FILE>');
+
+const gpio = new Creator.Gpio({
+    ip: Config.Creator.Ip
+});
 ```
 
 Inside the config-file you can set a custom IP and custom ports for your Matrix Creator.
@@ -129,7 +118,7 @@ CONFIG.Creator = {
 };
 ```
 
-You can also add aditional configuration like the connection to your Hue Lights or other APIs inside here.
+You can also add additional configuration like the connection to your Hue Lights or other APIs inside here.
 
 ```javascript
 CONFIG.Hue = {
@@ -147,6 +136,16 @@ You might want to run the software on your computer and the Raspberry PI. But ev
 
 
 
-### Deployment Process
+## Deployment Process
 
 For me the most easy way to depoly the project onto the Raspberry PI is to use GIT. After cloning my project repository to the raspberry PI, I'm able able to pull the current version of the software by just using `git pull`. Because of the two different config files on the devices I didn't need to make any customizations after pulling the software.
+
+
+
+## License
+
+ISC License Copyright (c) 2018, Mathis Keller
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.

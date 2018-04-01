@@ -26,14 +26,19 @@ To use this Framework you need ...
 
 ## Installation
 
-Clone this repository to your computer
+Install via npm directly from GitHub
+```
+npm install git+https://github.com/mathiskeller/matrix-creator-node-framework
+```
 
+Clone from GitHub
 ```
-git clone ''
+git clone https://github.com/mathiskeller/matrix-creator-node-framework
 ```
+
+
 
 Open the Terminal, navigate to your project folder and run npm install
-
 ```
 cd <PROJECT_FOLDER>
 npm install

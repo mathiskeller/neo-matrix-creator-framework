@@ -2,5 +2,6 @@
 
 node_modules
 .DS_Store
-config.js
 package-lock.json
+.mcfconfig.json
+!src/createConfig/.mcfconfig.json

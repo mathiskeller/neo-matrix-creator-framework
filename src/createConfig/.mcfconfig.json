@@ -1,6 +1,6 @@
 {
   "creator": {
-    "ip": "<MATRIX_CREATOR_IP>",
+    "ip": "127.0.0.1",
     "ports": {
       "Mic": 20037,
       "Everloop": 20021,

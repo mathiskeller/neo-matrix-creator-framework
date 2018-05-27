@@ -1,9 +1,13 @@
 'use strict';
 
-const buntstift = require('buntstift');
-const matrixIo = require('matrix-protos').matrix_io;
-const zmq = require('zmq');
-const events = require('events');
+const events = require('events'),
+      path = require('path');
+
+const buntstift = require('buntstift'),
+      matrixIo = require('matrix-protos').matrix_io,
+      zmq = require('zmq');
+
+const config = require(path.join(process.cwd(), '.mcfconfig.json'));
 
 const EventEmitter = events.EventEmitter;
 
@@ -13,14 +17,14 @@ module.exports = class Gpio extends EventEmitter {
 
     const defaults = {
       name: 'GPIO',
-      ip: '127.0.0.1',
-      port: 20049,
+      ip: config.creator.ip,
+      port: config.creator.ports.Gpio,
       delayBetweenUpdates: 0.250,
       timeoutAfterLastPing: 2.0,
       pingInterval: 2000
     };
 
-    this.options = Object.assign({}, defaults, options);
+    this.options = Object.assign(defaults, options);
 
     this.PINS = {};
 
@@ -60,7 +64,7 @@ module.exports = class Gpio extends EventEmitter {
     const gpioParams = matrixIo.malos.v1.io.GpioParams.create({
       pin: index,
       mode: matrixIo.malos.v1.io.GpioParams.EnumMode.OUTPUT,
-      value: value
+      value
     });
 
     const config = matrixIo.malos.v1.driver.DriverConfig.create({
@@ -71,11 +75,11 @@ module.exports = class Gpio extends EventEmitter {
 
     // update pin array
     this.PINS[`pin_${index}`] = {
-      index: index,
+      index,
       mode: gpioParams.mode,
-      type: type,
-      name: name,
-      value: value
+      type,
+      name,
+      value
     };
 
     buntstift.info(`${this.options.name} | Updated Output Pin: ${JSON.stringify(this.PINS[`pin_${index}`])}`);
@@ -98,10 +102,10 @@ module.exports = class Gpio extends EventEmitter {
     this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(config).finish());
 
     this.PINS[`pin_${index}`] = {
-      index: index,
+      index,
       mode: gpioParams.mode,
-      type: type,
-      name: name,
+      type,
+      name,
       value: 0
     };
 
@@ -152,7 +156,7 @@ module.exports = class Gpio extends EventEmitter {
 
           // only emit on change
           if (this.PINS[`pin_${pin}`].value !== value) {
-            this.emit('pin_change', { pin: this.PINS[`pin_${pin}`], value: value });
+            this.emit('pin_change', { pin: this.PINS[`pin_${pin}`], value });
           }
         }
       }

@@ -1,9 +1,13 @@
 'use strict';
 
-const buntstift = require('buntstift');
-const zmq = require('zmq');
-const matrixIo = require('matrix-protos').matrix_io;
-const events = require('events');
+const events = require('events'),
+      path = require('path');
+
+const buntstift = require('buntstift'),
+      matrixIo = require('matrix-protos').matrix_io,
+      zmq = require('zmq');
+
+const config = require(path.join(process.cwd(), '.mcfconfig.json'));
 
 const EventEmitter = events.EventEmitter;
 
@@ -13,15 +17,15 @@ module.exports = class Humidity extends EventEmitter {
 
     const defaults = {
       name: 'HUMIDITY',
-      ip: '127.0.0.1',
-      port: 20017,
+      ip: config.creator.ip,
+      port: config.creator.ports.Gpio,
       delayBetweenUpdates: 2.0,
       timeoutAfterLastPing: 6.0,
       calibrationTemperature: 23,
       pingInterval: 2000
     };
 
-    this.options = Object.assign({}, defaults, options);
+    this.options = Object.assign(defaults, options);
 
     // Configuration
     this.configSocket = zmq.socket('push');

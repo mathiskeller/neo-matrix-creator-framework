@@ -1,9 +1,13 @@
 'use strict';
 
-const buntstift = require('buntstift');
-const matrixIo = require('matrix-protos').matrix_io;
-const zmq = require('zmq');
-const events = require('events');
+const events = require('events'),
+      path = require('path');
+
+const buntstift = require('buntstift'),
+      matrixIo = require('matrix-protos').matrix_io,
+      zmq = require('zmq');
+
+const config = require(path.join(process.cwd(), '.mcfconfig.json'));
 
 const EventEmitter = events.EventEmitter;
 
@@ -13,12 +17,12 @@ module.exports = class Everloop extends EventEmitter {
 
     const defaults = {
       name: 'EVERLOOP',
-      ip: '127.0.0.1',
-      port: 20021,
+      ip: config.creator.ip,
+      port: config.creator.ports.Everloop,
       leds: 35
     };
 
-    this.options = Object.assign({}, defaults, options);
+    this.options = Object.assign(defaults, options);
 
     this.currentLight = this.generateDefaultLight(0, 0, 0, 0);
     this.previousLight = this.generateDefaultLight(0, 0, 0, 0);
@@ -73,7 +77,7 @@ module.exports = class Everloop extends EventEmitter {
     const light = [];
 
     for (let i = 0; i < this.options.leds; ++i) {
-      light.push({ red: red, green: green, blue: blue, white: white });
+      light.push({ red, green, blue, white });
     }
 
     return light;
@@ -158,9 +162,7 @@ module.exports = class Everloop extends EventEmitter {
       image.led.push(ledValue);
     }
 
-    const config = matrixIo.malos.v1.driver.DriverConfig.create({
-      image: image
-    });
+    const config = matrixIo.malos.v1.driver.DriverConfig.create({ image });
 
     this.updateState();
     this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(config).finish());

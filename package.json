@@ -2,6 +2,7 @@
   "name": "matrix-creator-node-framework",
   "version": "0.1.0",
   "description": "Matrix Creator Node Framework makes it easy to set up your own Matrix Creator project using Node.js.",
+  "main": "index.js",
   "keywords": [
     "Internet of Things",
     "Smart Home",
@@ -15,15 +16,16 @@
     "type": "git",
     "url": "git@github.com:mathiskeller/matrix-creator-node-framework.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^4.19.1",
-    "eslint-config-es": "^0.9.1"
+    "roboter": "1.0.4"
   },
   "dependencies": {
-    "buntstift": "^1.1.0",
+    "buntstift": "1.1.0",
     "matrix-protos": "0.0.21",
-    "node-hue-api": "^2.4.2",
-    "zmq": "^2.15.3"
+    "node-hue-api": "2.4.2",
+    "require-dir": "1.0.0",
+    "zmq": "2.15.3"
   }
 }

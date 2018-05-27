@@ -1,6 +1,0 @@
-{
-  "extends": "es/2015/server",
-  "rules": {
-        "object-shorthand": [2, "never"],
-    }
-}

@@ -3,7 +3,7 @@
 // Require modules
 const buntstift = require('buntstift');
 const path = require('path');
-const Creator = require(path.join(__dirname, '../index'));
+const Creator = require(path.join(__dirname, '../src/index'));
 const Config = require(path.join(__dirname, 'config'));
 
 // Initialize modules

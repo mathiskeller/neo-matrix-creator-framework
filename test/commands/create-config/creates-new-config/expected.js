@@ -10,7 +10,7 @@ const expected = {
 
     const configFile = shell.ls('-a', dirname);
 
-    assert.that(configFile).is.containing('.mcfconfig.json');
+    assert.that(configFile).is.containing('.neoconfig.json');
   }
 };
 

@@ -26,7 +26,7 @@ const runCommand = function ({ cwd, command, directory }) {
       input = {};
     }
 
-    const pathToCli = path.join(cwd, '..', '..', 'src', 'bin', 'mcf.js');
+    const pathToCli = path.join(cwd, '..', '..', 'src', 'bin', 'neo.js');
 
     const child = shell.exec(`node ${pathToCli} ${command}`, {
       cwd: directory,

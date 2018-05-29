@@ -2,6 +2,6 @@
 
 const path = require('path');
 
-const requireDir = require('require-dir');
+const matrix = require(path.join(__dirname, 'matrix'));
 
-module.exports = requireDir(path.join(__dirname, 'matrix'));
+module.exports = matrix;

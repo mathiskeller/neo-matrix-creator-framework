@@ -4,5 +4,5 @@ node_modules
 .DS_Store
 package-lock.json
 
-.mcfconfig.json
+.neoconfig.json
 test/**/temp

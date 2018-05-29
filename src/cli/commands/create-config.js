@@ -4,11 +4,11 @@ const path = require('path');
 
 const buntstift = require('buntstift');
 
-const config = require('../../create-config/.mcfconfig.tpl.json'),
+const config = require('../../create-config/.neoconfig.tpl.json'),
       file = require('../../file');
 
 const command = {
-  description: 'Creates the needed .mcfconfig.json File.',
+  description: 'Creates the needed .neoconfig.json File.',
 
   async run () {
     const directory = process.cwd();
@@ -37,7 +37,7 @@ const command = {
     const content = JSON.stringify(config, null, '\t');
 
     try {
-      await file.write({ path: path.join(directory, '.mcfconfig.json'), content });
+      await file.write({ path: path.join(directory, '.neoconfig.json'), content });
     } catch (ex) {
       throw ex;
     }

@@ -1,7 +1,7 @@
 {
-  "name": "matrix-creator-node-framework",
-  "version": "0.1.0",
-  "description": "Matrix Creator Node Framework makes it easy to set up your own Matrix Creator project using Node.js.",
+  "name": "neo-matrix-creator-framework",
+  "version": "0.0.0",
+  "description": "Neo is a Framework that makes it easy to set up your own Matrix Creator project using Node.js.",
   "keywords": [
     "Internet of Things",
     "Smart Home",

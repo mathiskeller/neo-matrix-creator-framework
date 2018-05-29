@@ -1,15 +1,13 @@
-# Matrix Creator Node Framework
+# Neo (Matrix Creator Framework)
 
-Matrix Creator Node Framework makes it easy to set up your own Matrix Creator project using Node.js.
-
-
+Neo is a framework that makes it easy to set up your own Matrix Creator project using Node.js.
 
 **You can use this framework to ...**
 
 - access the GPIO Pins (Setup and Read Input and Output Pins)
 - control the Everloop (Fade and Switch LEDs by using a Light Array)
 - read and configure the Humidity, IMU, Uv and Pressure sensors
-- TODO: access the Microphone Array (Already coded for an earlier software but still needs to be implemeted into this framework)
+- TODO: access the Microphone Array (Already coded for an earlier software but still needs to be implemented into this framework)
 
 **To use this Framework you need ...**
 - a Matrix Creator Board
@@ -23,15 +21,15 @@ This framework is using [ZMQ](https://www.npmjs.com/package/zmq), make sure you 
 Install via npm directly from GitHub
 
 ```
-npm install git+https://github.com/mathiskeller/matrix-creator-node-framework
+npm install git+https://github.com/mathiskeller/neo-matrix-creator-framework
 ```
 
 ### Setting up a config file
 
-To create the config file `.mcfconfig.json` where all the ports and the IP of the Matrix Creator are stored use following command:
+To create the config file `.neoconfig.json` where all the ports and the IP of the Matrix Creator are stored use following command:
 
 ```
-npx mcf create-config
+npx neo create-config
 ```
 
 This will guide you to the process of creating the config file and saves it to your project folder.
@@ -94,9 +92,9 @@ You can detail information about this in the [docs](./docs/)
 
 ## Multiple config-files on different devices
 
-You might want to run the software on your computer and the Raspberry PI. But every time you want to run the software on the Raspberry Pi you have to change the IP. By using two different `.mcfconfig.json` files for the Raspberry PI and your computer you don't have to change your code when deploying. The config on the Raspberry PI can hold the local IP (`127.0.0.1`) and the config file on your computer stores the IP of the Raspberry PI.
+You might want to run the software on your computer and the Raspberry PI. But every time you want to run the software on the Raspberry Pi you have to change the IP. By using two different `.neoconfig.json` files for the Raspberry PI and your computer you don't have to change your code when deploying. The config on the Raspberry PI can hold the local IP (`127.0.0.1`) and the config file on your computer stores the IP of the Raspberry PI.
 
-You can do this by running the `npx mcf create-config` command on both systems and adding the `.mcfconfig.json` to the gitignore.
+You can do this by running the `npx neo create-config` command on both systems and adding the `.neoconfig.json` to the gitignore.
 
 ## Deployment Process
 

@@ -8,7 +8,7 @@ const config = require('../../create-config/.mcfconfig.tpl.json'),
       file = require('../../file');
 
 const command = {
-  description: 'Creates the needed config.js File.',
+  description: 'Creates the needed .mcfconfig.json File.',
 
   async run () {
     const directory = process.cwd();

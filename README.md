@@ -9,7 +9,7 @@ Matrix Creator Node Framework makes it easy to set up your own Matrix Creator pr
 - access the GPIO Pins (Setup and Read Input and Output Pins)
 - control the Everloop (Fade and Switch LEDs by using a Light Array)
 - read and configure the Humidity, IMU, Uv and Pressure sensors
-- TODO: access the Microphone Array
+- TODO: access the Microphone Array (Already coded for an earlier software but still needs to be implemeted into this framework)
 
 **To use this Framework you need ...**
 - a Matrix Creator Board
@@ -28,8 +28,13 @@ npm install git+https://github.com/mathiskeller/matrix-creator-node-framework
 
 ### Setting up a config file
 
-INSTALL CONFIG
+To create the config file `.mcfconfig.json` where all the ports and the IP of the Matrix Creator are stored use following command:
 
+```
+npx mcf create-config
+```
+
+This will guide you to the process of creating the config file and saves it to your project folder.
 
 You're now ready to start coding your own project.
 
@@ -39,22 +44,20 @@ To use this package require it at the top of your project file.
 
 ```Javascript
 const Creator = require('matrix-creator-node-framework');
-...
 ```
 
-All modules you want use need to be initialized:
+All single modules you want use need to be initialized:
 
 ```javascript
 const everloop = new Creator.Everloop();
 const gpio = new Creator.Gpio();
-...
 ```
 
-Optionally you can define custom options. For example the IP address if you want to access the matrix creator from another device:
+Optionally you can define custom options. For example the pingInterval:
 
-```
+```javascript
 const gpio = new Creator.Gpio({
-    ip: '<MATRIX_CREATOR_IP>'
+    pingInterval: 1000
 });
 ```
 
@@ -62,7 +65,7 @@ You can detail information about the available options for each module in the [d
 
 #### Using the single modules
 
-Every module (except the everloop module) comes with an integrated event emitter. To use a module you need to substribe to the events.
+Every module (except the everloop module) comes with an integrated event emitter. To use a module you need to subscribe to the events.
 
 The following example shows how to use the GPIO module to toggle the Everloop LEDs. First you need to define an button. Afterwards you can listen on events emitted by this button. To toggle the Everloop every time you click the button you need to get the state of the LEDs.
 
@@ -89,33 +92,11 @@ You can detail information about this in the [docs](./docs/)
 
 
 
-## Setting up a config file
+## Multiple config-files on different devices
 
-You can customize the configuration by copying and renaming `config.tpl.js` to `config.js` and integrate it to your project-file using following code:
+You might want to run the software on your computer and the Raspberry PI. But every time you want to run the software on the Raspberry Pi you have to change the IP. By using two different `.mcfconfig.json` files for the Raspberry PI and your computer you don't have to change your code when deploying. The config on the Raspberry PI can hold the local IP (`127.0.0.1`) and the config file on your computer stores the IP of the Raspberry PI.
 
-```javascript
-const Config = require('<PATH-TO-CONFIG-FILE>');
-
-const gpio = new Creator.Gpio({
-    ip: Config.Creator.Ip
-});
-```
-
-Inside the config-file you can set a custom IP and custom ports for your Matrix Creator.
-
-```javascript
-CONFIG.Creator = {
-  Ip: '<MATRIX_CREATOR_IP>',
-  Ports: {
-    Mic: 20037,
-    ...
-  }
-};
-```
-
-#### **Multiple config-files on different devices**
-
-You might want to run the software on your computer and the Raspberry PI. But every time you want to run the software on the Raspberry Pi you have to change the IP. By using two different `config.js` files for the Raspberry PI and your computer you don't have to change your code when deploying. The config.js file on the Raspberry PI can hold the local IP (`127.0.0.1`) and the `config.js` file on your computer stores the IP of the Raspberry PI.
+You can do this by running the `npx mcf create-config` command on both systems and adding the `.mcfconfig.json` to the gitignore.
 
 ## Deployment Process
 

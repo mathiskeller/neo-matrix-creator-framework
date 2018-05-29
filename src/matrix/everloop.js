@@ -162,10 +162,10 @@ module.exports = class Everloop extends EventEmitter {
       image.led.push(ledValue);
     }
 
-    const config = matrixIo.malos.v1.driver.DriverConfig.create({ image });
+    const driverConfig = matrixIo.malos.v1.driver.DriverConfig.create({ image });
 
     this.updateState();
-    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(config).finish());
+    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(driverConfig).finish());
   }
 
   error () {

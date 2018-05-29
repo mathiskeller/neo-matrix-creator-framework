@@ -4,7 +4,7 @@ const path = require('path');
 
 const buntstift = require('buntstift');
 
-const config = require('../../createConfig/.mcfconfig.json'),
+const config = require('../../create-config/.mcfconfig.tpl.json'),
       file = require('../../file');
 
 const command = {

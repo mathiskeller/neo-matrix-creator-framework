@@ -67,11 +67,11 @@ module.exports = class Gpio extends EventEmitter {
       value
     });
 
-    const config = matrixIo.malos.v1.driver.DriverConfig.create({
+    const driverConfig = matrixIo.malos.v1.driver.DriverConfig.create({
       gpio: gpioParams
     });
 
-    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(config).finish());
+    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(driverConfig).finish());
 
     // update pin array
     this.PINS[`pin_${index}`] = {
@@ -93,13 +93,13 @@ module.exports = class Gpio extends EventEmitter {
       value: 0
     });
 
-    const config = matrixIo.malos.v1.driver.DriverConfig.create({
+    const driverConfig = matrixIo.malos.v1.driver.DriverConfig.create({
       delayBetweenUpdates: this.options.delayBetweenUpdates,
       timeoutAfterLastPing: this.options.timeoutAfterLastPing,
       gpio: gpioParams
     });
 
-    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(config).finish());
+    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(driverConfig).finish());
 
     this.PINS[`pin_${index}`] = {
       index,

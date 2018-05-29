@@ -17,17 +17,17 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "assertthat": "^1.0.0",
     "eslint": "^4.19.1",
     "roboter": "1.0.4"
   },
   "dependencies": {
-    "buntstift": "^1.4.0",
+    "buntstift": "1.5.0",
     "command-line-commands": "2.0.1",
-    "execa": "0.10.0",
-    "matrix-protos": "0.0.21",
-    "node-hue-api": "2.4.2",
+    "matrix-protos": "0.0.22",
     "processenv": "1.0.0",
     "require-dir": "1.0.0",
+    "shelljs": "0.8.2",
     "zmq": "2.15.3"
   }
 }

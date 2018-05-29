@@ -31,14 +31,15 @@ module.exports = class Humidity extends EventEmitter {
     this.configSocket = zmq.socket('push');
     this.configSocket.connect(`tcp://${this.options.ip}:${this.options.port}`);
 
-    this.config = matrixIo.malos.v1.driver.DriverConfig.create({
+    const driverConfig = matrixIo.malos.v1.driver.DriverConfig.create({
       delayBetweenUpdates: this.options.delayBetweenUpdates,
       timeoutAfterLastPing: this.options.timeoutAfterLastPing,
       humidity: matrixIo.malos.v1.sense.HumidityParams.create({
         currentTemperature: this.options.calibrationTemperature
       })
     });
-    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(this.config).finish());
+
+    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(driverConfig).finish());
 
     this.update();
     this.ping();

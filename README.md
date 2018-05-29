@@ -11,16 +11,10 @@ Matrix Creator Node Framework makes it easy to set up your own Matrix Creator pr
 - read and configure the Humidity, IMU, Uv and Pressure sensors
 - TODO: access the Microphone Array
 
-
-
-
 **To use this Framework you need ...**
 - a Matrix Creator Board
 - a Raspberry PI where Node.js is installed.
 - to install the [Matrix Core Software](https://matrix-io.github.io/matrix-documentation/matrix-core/) (you can find a documentation on how to do this [here](https://matrix-io.github.io/matrix-documentation/matrix-core/getting-started/installation/)).
-
-
-
 
 ## Installation
 
@@ -32,9 +26,12 @@ Install via npm directly from GitHub
 npm install git+https://github.com/mathiskeller/matrix-creator-node-framework
 ```
 
+### Setting up a config file
+
+INSTALL CONFIG
+
+
 You're now ready to start coding your own project.
-
-
 
 ## Quickstart
 
@@ -62,8 +59,6 @@ const gpio = new Creator.Gpio({
 ```
 
 You can detail information about the available options for each module in the [docs](./docs/)
-
-
 
 #### Using the single modules
 
@@ -118,29 +113,13 @@ CONFIG.Creator = {
 };
 ```
 
-You can also add additional configuration like the connection to your Hue Lights or other APIs inside here.
-
-```javascript
-CONFIG.Hue = {
-  Id: '<HUE_BRIDGE_ID>',
-  Host: '<HUE_IP_ADDRESS>',
-  User: '<HUE_USER>'
-};
-```
-
-
-
 #### **Multiple config-files on different devices**
 
 You might want to run the software on your computer and the Raspberry PI. But every time you want to run the software on the Raspberry Pi you have to change the IP. By using two different `config.js` files for the Raspberry PI and your computer you don't have to change your code when deploying. The config.js file on the Raspberry PI can hold the local IP (`127.0.0.1`) and the `config.js` file on your computer stores the IP of the Raspberry PI.
 
-
-
 ## Deployment Process
 
 For me the most easy way to deploy my project onto the Raspberry PI is to use GIT. After cloning my project repository to the raspberry PI, I'm able to pull the current version of the software by just using `git pull`. Because of the two different config files on the devices I didn't need to make any customizations after pulling the software.
-
-
 
 ## License
 

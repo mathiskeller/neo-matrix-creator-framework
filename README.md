@@ -41,25 +41,33 @@ You're now ready to start coding your own project.
 To use this package require it at the top of your project file.
 
 ```Javascript
-const Creator = require('matrix-creator-node-framework');
+const neo = require('neo-matrix-creator-framework');
 ```
 
 All single modules you want use need to be initialized:
 
 ```javascript
-const everloop = new Creator.Everloop();
-const gpio = new Creator.Gpio();
+const everloop = new neo.Everloop();
+const gpio = new neo.Gpio();
 ```
 
 Optionally you can define custom options. For example the pingInterval:
 
 ```javascript
-const gpio = new Creator.Gpio({
+const gpio = new neo.Gpio({
     pingInterval: 1000
 });
 ```
 
-You can detail information about the available options for each module in the [docs](./docs/)
+You can detail information about the available options for each module in the [docs](./docs/) folder:
+
+- [Everloop](./docs/Everloop.md)
+- [Gpio](./docs/Gpio.md)
+- [Humidity](./docs/Humidity.md)
+- [Imu](./docs/Imu.md)
+- [Pressure](./docs/Pressure.md)
+- [Uv](./docs/Uv.md)
+
 
 #### Using the single modules
 

@@ -10,8 +10,9 @@
     "Raspberry PI",
     "Matrix Creator Board"
   ],
+  "main": "./dist/index.js",
   "bin": {
-    "neo": "./src/bin/neo.js"
+    "neo": "./dist/bin/neo.js"
   },
   "author": "Mathis Keller <mk@mathiskeller.de> (http://mathiskeller.de)",
   "repository": {

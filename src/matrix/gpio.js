@@ -7,7 +7,7 @@ const buntstift = require('buntstift'),
       matrixIo = require('matrix-protos').matrix_io,
       zmq = require('zmq');
 
-const config = require(path.join(process.cwd(), '.mcfconfig.json'));
+const config = require(path.join(process.cwd(), '.neoconfig.json'));
 
 const EventEmitter = events.EventEmitter;
 

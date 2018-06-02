@@ -50,7 +50,7 @@ const runCommand = function ({ cwd, command, directory }) {
     inputs.forEach((inputString, index) => {
       setTimeout(() => {
         child.stdin.write(inputString);
-      }, 500 * index);
+      }, 750 * index);
     });
   });
 };

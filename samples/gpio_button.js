@@ -3,11 +3,11 @@
 // Require modules
 const buntstift = require('buntstift');
 const path = require('path');
-const Creator = require(path.join(__dirname, '../src/matrix/'));
+const neo = require(path.join(__dirname, '../src/matrix/'));
 
 // Initialize modules
-const gpio = new Creator.Gpio();
-const everloop = new Creator.Everloop();
+const gpio = new neo.Gpio();
+const everloop = new neo.Everloop();
 
 // Register button on gpio pin 0
 gpio.button(0, 'light-switch');

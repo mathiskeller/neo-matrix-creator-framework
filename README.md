@@ -7,7 +7,7 @@ Neo is a framework that makes it easy to set up your own Matrix Creator project 
 - access the GPIO Pins (Setup and Read Input and Output Pins)
 - control the Everloop (Fade and Switch LEDs by using a Light Array)
 - read and configure the Humidity, IMU, Uv and Pressure sensors
-- TODO: access the Microphone Array (Already coded for an earlier software but still needs to be implemented into this framework)
+- **TODO:** access the Microphone Array (Already coded for an earlier software but still needs to be implemented into this framework)
 
 **To use this Framework you need ...**
 - a Matrix Creator Board
@@ -71,7 +71,7 @@ You can detail information about the available options for each module in the [d
 
 #### Using the single modules
 
-Every module (except the everloop module) comes with an integrated event emitter. To use a module you need to subscribe to the events.
+Every module comes with an integrated event emitter to receive data.
 
 The following example shows how to use the GPIO module to toggle the Everloop LEDs. First you need to define an button. Afterwards you can listen on events emitted by this button. To toggle the Everloop every time you click the button you need to get the state of the LEDs.
 
@@ -91,6 +91,11 @@ gpio.on('light-switch', state => {
     // Switch Everloop off
     everloop.fadeLight(everloop.generateDefaultLight(0, 0, 0, 0));
   }
+});
+
+// listen to errors
+gpio.on('error', err {
+  console.log(err);
 });
 ```
 

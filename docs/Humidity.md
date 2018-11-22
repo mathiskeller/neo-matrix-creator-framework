@@ -34,6 +34,11 @@ To listen to the events emitted by the module use following sample code:
 
 ```javascript
 humidity.on('data', data => {
-   buntstift.info(JSON.stringify(data));
+   console.log(JSON.stringify(data));
+});
+
+// optional
+humidity.on('error', err => {
+   console.log(err);
 });
 ```

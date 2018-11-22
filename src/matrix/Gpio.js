@@ -3,8 +3,7 @@
 const events = require('events'),
       path = require('path');
 
-const buntstift = require('buntstift'),
-      matrixIo = require('matrix-protos').matrix_io,
+const matrixIo = require('matrix-protos').matrix_io,
       zmq = require('zmq');
 
 const config = require(path.join(process.cwd(), '.neoconfig.json'));
@@ -31,11 +30,14 @@ module.exports = class Gpio extends EventEmitter {
     this.configSocket = zmq.socket('push');
     this.configSocket.connect(`tcp://${this.options.ip}:${this.options.port}`);
 
-    this.error();
+    this.error().error(err => {
+      throw err;
+    });
+
     this.update();
     this.ping();
 
-    buntstift.info(`${this.options.name} initialized`);
+    return `${this.options.name} initialized`;
   }
 
   button (index, name) {
@@ -82,7 +84,7 @@ module.exports = class Gpio extends EventEmitter {
       value
     };
 
-    buntstift.info(`${this.options.name} | Updated Output Pin: ${JSON.stringify(this.PINS[`pin_${index}`])}`);
+    return `${this.options.name} | Updated Output Pin: ${JSON.stringify(this.PINS[`pin_${index}`])}`;
   }
 
   setInputPin (index, type, name) {
@@ -109,7 +111,7 @@ module.exports = class Gpio extends EventEmitter {
       value: 0
     };
 
-    buntstift.info(`${this.options.name} | Registered Input Pin: ${JSON.stringify(this.PINS[`pin_${index}`])}`);
+    return `${this.options.name} | Registered Input Pin: ${JSON.stringify(this.PINS[`pin_${index}`])}`;
   }
 
   ping () {
@@ -121,17 +123,6 @@ module.exports = class Gpio extends EventEmitter {
     setInterval(() => {
       pingSocket.send('');
     }, this.options.pingInterval);
-  }
-
-  error () {
-    const errorSocket = zmq.socket('sub');
-
-    errorSocket.connect(`tcp://${this.options.ip}:${this.options.port + 2}`);
-
-    errorSocket.subscribe('');
-    errorSocket.on('message', err => {
-      buntstift.error(`${this.options.name} | Error: ${err.toString('utf8')}`);
-    });
   }
 
   update () {
@@ -160,6 +151,17 @@ module.exports = class Gpio extends EventEmitter {
           }
         }
       }
+    });
+  }
+
+  error () {
+    const errorSocket = zmq.socket('sub');
+
+    errorSocket.connect(`tcp://${this.options.ip}:${this.options.port + 2}`);
+
+    errorSocket.subscribe('');
+    errorSocket.on('message', err => {
+      this.emit('error', `${this.options.name} | socket error: ${err.toString('utf8')}`);
     });
   }
 

@@ -8,7 +8,7 @@ const expected = {
   async validate ({ error, dirname }) {
     assert.that(error).is.undefined();
 
-    const configFile = shell.ls('-a', dirname);
+    const configFile = shell.ls('-A', dirname);
 
     assert.that(configFile).is.containing('.neoconfig.json');
   }

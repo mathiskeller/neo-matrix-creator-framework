@@ -64,3 +64,14 @@ const redToBlue = everloop.generateGradient([
 
 everloop.fadeLight(redToBlue);
 ```
+
+## EventListener
+
+To listen to the events emitted by the module use following sample code:
+
+```javascript
+// optional
+everloop.on('error', err => {
+  console.log(err);
+});
+```

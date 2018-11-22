@@ -3,8 +3,7 @@
 const events = require('events'),
       path = require('path');
 
-const buntstift = require('buntstift'),
-      matrixIo = require('matrix-protos').matrix_io,
+const matrixIo = require('matrix-protos').matrix_io,
       zmq = require('zmq');
 
 const config = require(path.join(process.cwd(), '.neoconfig.json'));
@@ -33,12 +32,12 @@ module.exports = class Everloop extends EventEmitter {
 
     this.error();
     this.switchLight(this.currentLight);
-
-    buntstift.info(`${this.options.name} initialized`);
   }
 
   off () {
     this.fadeLight(this.generateDefaultLight(0, 0, 0, 0));
+
+    return true;
   }
 
   generateGradient (colors) {
@@ -74,6 +73,22 @@ module.exports = class Everloop extends EventEmitter {
   }
 
   generateDefaultLight (red, green, blue, white) {
+    if (red < 0 || red > 100) {
+      this.emit('error', `${this.options.name} | generateDefaultLight(): Red needs to be between 0 and 100`);
+    }
+
+    if (green < 0 || green > 100) {
+      this.emit('error', `${this.options.name} | generateDefaultLight(): Green needs to be between 0 and 100`);
+    }
+
+    if (blue < 0 || blue > 100) {
+      this.emit('error', `${this.options.name} | generateDefaultLight(): Blue needs to be between 0 and 100`);
+    }
+
+    if (white < 0 || white > 100) {
+      this.emit('error', `${this.options.name} | generateDefaultLight(): White needs to be between 0 and 100`);
+    }
+
     const light = [];
 
     for (let i = 0; i < this.options.leds; ++i) {
@@ -88,7 +103,8 @@ module.exports = class Everloop extends EventEmitter {
     this.storePreviousLight();
 
     this.setLight(light);
-    buntstift.info(`${this.options.name} | Switched Light`);
+
+    return true;
   }
 
   fadeLight (light, intervalTime = 2) {
@@ -122,50 +138,64 @@ module.exports = class Everloop extends EventEmitter {
       this.setLight(newLight);
 
       if (finished) {
-        buntstift.info(`${this.options.name} | Faded Light`);
         this.stopFade();
+
+        return true;
       }
     }, intervalTime);
   }
 
   stopFade () {
     clearInterval(this.interval);
+
+    return true;
   }
 
   updateState () {
+    let state = this.state;
+
     if (JSON.stringify(this.currentLight) === JSON.stringify(this.generateDefaultLight(0, 0, 0, 0))) {
-      this.state = 'off';
+      state = 'off';
     } else {
-      this.state = 'on';
+      state = 'on';
     }
+
+    return state;
   }
 
   storePreviousLight () {
-    // save currentLight as previousLight
     this.previousLight = this.currentLight;
+
+    return this.previousLight;
   }
 
   setLight (light) {
-    const image = matrixIo.malos.v1.io.EverloopImage.create();
+    try {
+      const image = matrixIo.malos.v1.io.EverloopImage.create();
 
-    // save the new light in currentLight
-    this.currentLight = light;
+      // save the new light in currentLight
+      this.currentLight = light;
 
-    for (let i = 0; i < this.options.leds; ++i) {
-      const ledValue = matrixIo.malos.v1.io.LedValue.create({
-        red: Math.max(0, light[i].red),
-        green: Math.max(0, light[i].green),
-        blue: Math.max(0, light[i].blue),
-        white: Math.max(0, light[i].white)
-      });
+      for (let i = 0; i < this.options.leds; ++i) {
+        const ledValue = matrixIo.malos.v1.io.LedValue.create({
+          red: Math.max(0, light[i].red),
+          green: Math.max(0, light[i].green),
+          blue: Math.max(0, light[i].blue),
+          white: Math.max(0, light[i].white)
+        });
 
-      image.led.push(ledValue);
+        image.led.push(ledValue);
+      }
+
+      const driverConfig = matrixIo.malos.v1.driver.DriverConfig.create({ image });
+
+      this.state = this.updateState();
+      this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(driverConfig).finish());
+    } catch (ex) {
+      this.emit('error', `${this.options.name} | setLight(): Failed to set light on everloop - ${ex.message}`);
     }
 
-    const driverConfig = matrixIo.malos.v1.driver.DriverConfig.create({ image });
-
-    this.updateState();
-    this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(driverConfig).finish());
+    return true;
   }
 
   error () {
@@ -175,7 +205,7 @@ module.exports = class Everloop extends EventEmitter {
 
     errorSocket.subscribe('');
     errorSocket.on('message', err => {
-      buntstift.error(`${this.options.name} | Error: ${err.toString('utf8')}`);
+      this.emit('error', `${this.options.name} | socket error: ${err.toString('utf8')}`);
     });
   }
 };

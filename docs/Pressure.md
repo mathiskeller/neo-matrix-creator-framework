@@ -33,6 +33,11 @@ To listen to the events emitted by the module use following sample code:
 
 ```javascript
 pressure.on('data', data => {
-   buntstift.info(JSON.stringify(data));
+  console.log(JSON.stringify(data));
+});
+
+// optional
+pressure.on('error', err => {
+  console.log(err);
 });
 ```

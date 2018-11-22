@@ -5,7 +5,7 @@ const path = require('path');
 const assert = require('assertthat'),
       shell = require('shelljs');
 
-const runCommand = require('../helpers/runCommand');
+const runCommand = require('./runCommand');
 
 const tempDirectory = path.join(__dirname, 'temp');
 

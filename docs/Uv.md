@@ -33,6 +33,11 @@ To listen to the events emitted by the module use following sample code:
 
 ```javascript
 uv.on('data', data => {
-   buntstift.info(JSON.stringify(data));
+  console.log(JSON.stringify(data));
+});
+
+// optional
+uv.on('error', err => {
+  console.log(err);
 });
 ```

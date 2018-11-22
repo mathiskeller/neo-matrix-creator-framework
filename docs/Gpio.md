@@ -72,7 +72,7 @@ When registering an input pin it's value is emitted by the basic event emitter o
 gpio.setInputPin(1, 'touch-sensor', 'light-switch');
 
 gpio.on('pin_1', data => {
-  buntstift.info(`${data.pin}: ${data.value}`);
+  console.log(`${data.pin}: ${data.value}`);
 })
 ```
 
@@ -101,9 +101,9 @@ gpio.button(0, 'light-switch');
 
 gpio.on('light-switch', state => {
   if (state === 'pressed') {
-    buntstift.info('button pressed');
+    console.log('button pressed');
   } else {
-    buntstift.ino('button released');
+    console.log('button released');
   }
 }
 ```

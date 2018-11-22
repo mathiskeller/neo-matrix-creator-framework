@@ -3,8 +3,7 @@
 const events = require('events'),
       path = require('path');
 
-const buntstift = require('buntstift'),
-      matrixIo = require('matrix-protos').matrix_io,
+const matrixIo = require('matrix-protos').matrix_io,
       zmq = require('zmq');
 
 const config = require(path.join(process.cwd(), '.neoconfig.json'));
@@ -45,7 +44,7 @@ module.exports = class Humidity extends EventEmitter {
     this.ping();
     this.error();
 
-    buntstift.info(`${this.options.name} initialized`);
+    return `${this.options.name} initialized`;
   }
 
   update () {
@@ -58,7 +57,6 @@ module.exports = class Humidity extends EventEmitter {
       const data = matrixIo.malos.v1.sense.Humidity.decode(buffer);
 
       this.emit('data', data);
-      buntstift.info(`${this.options.name} | Message: ${JSON.stringify(data)}`);
     });
   }
 
@@ -80,7 +78,7 @@ module.exports = class Humidity extends EventEmitter {
 
     errorSocket.subscribe('');
     errorSocket.on('message', err => {
-      buntstift.error(`${this.options.name} | Error: ${err.toString('utf8')}`);
+      this.emit('error', `${this.options.name} | socket error: ${err.toString('utf8')}`);
     });
   }
 };

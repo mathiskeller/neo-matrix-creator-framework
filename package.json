@@ -26,12 +26,15 @@
     "roboter": "1.0.4"
   },
   "dependencies": {
+    "@google-cloud/speech": "2.1.1",
     "buntstift": "1.5.0",
     "command-line-commands": "2.0.1",
     "matrix-protos": "0.0.22",
+    "node-record-lpcm16": "0.3.1",
     "processenv": "1.0.0",
     "require-dir": "1.0.0",
     "shelljs": "0.8.2",
+    "stream": "0.0.2",
     "zmq": "2.15.3"
   }
 }

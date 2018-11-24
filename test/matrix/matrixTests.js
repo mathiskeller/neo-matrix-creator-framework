@@ -41,6 +41,16 @@ suite('matrix', function () {
       assert.that(currentLight).is.equalTo(everloop.generateDefaultLight(0, 0, 0, 0));
     });
 
+    test('TurnOnWhiteLight', async () => {
+      const everloop = new neo.Everloop();
+
+      everloop.setLight(everloop.generateDefaultLight(0, 0, 0, 100));
+
+      const currentLight = everloop.currentLight;
+
+      assert.that(currentLight).is.equalTo(everloop.generateDefaultLight(0, 0, 0, 100));
+    });
+
     test('Generates Light with wrong parameters', async () => {
       const everloop = new neo.Everloop();
 

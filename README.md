@@ -7,16 +7,20 @@ Neo is a framework that makes it easy to set up your own Matrix Creator project 
 - access the GPIO Pins (Setup and Read Input and Output Pins)
 - control the Everloop (Fade and Switch LEDs by using a Light Array)
 - read and configure the Humidity, IMU, Uv and Pressure sensors
-- **TODO:** access the Microphone Array (Already coded for an earlier software but still needs to be implemented into this framework)
+- stream the microphone input to Google Cloud Speech to get a speech to text result
 
 **To use this Framework you need ...**
 - a Matrix Creator Board
 - a Raspberry PI where Node.js is installed.
 - to install the [Matrix Core Software](https://matrix-io.github.io/matrix-documentation/matrix-core/) (you can find a documentation on how to do this [here](https://matrix-io.github.io/matrix-documentation/matrix-core/getting-started/installation/)).
 
-## Installation
 
-This framework is using [ZMQ](https://www.npmjs.com/package/zmq), make sure you follow the instructions on how to install ZMQ on your computer.
+## Dependencies
+
+- This framework is using [ZMQ](https://www.npmjs.com/package/zmq), make sure you follow the instructions on how to install ZMQ on your computer.
+- If you want to use the SpeecToText module you need to have SOX installed. See the [node-record-lpcm16](https://www.npmjs.com/package/node-record-lpcm16) documentation
+
+## Installation
 
 Install via npm directly from GitHub
 

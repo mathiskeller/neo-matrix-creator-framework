@@ -121,6 +121,6 @@ module.exports = class SpeechToText extends EventEmitter {
 
     this.emit('state', this.state);
 
-    return this.state();
+    return this.state;
   }
 };

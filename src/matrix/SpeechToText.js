@@ -9,7 +9,7 @@ const googleSpeech = require('@google-cloud/speech'),
 
 const EventEmitter = events.EventEmitter;
 
-module.exports = class SpeechToText extends EventEmitter {
+class SpeechToText extends EventEmitter {
   constructor (options) {
     super();
 
@@ -123,4 +123,6 @@ module.exports = class SpeechToText extends EventEmitter {
 
     return this.state;
   }
-};
+}
+
+module.exports = SpeechToText;

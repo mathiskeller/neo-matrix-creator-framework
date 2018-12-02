@@ -10,7 +10,7 @@ const config = require(path.join(process.cwd(), '.neoconfig.json'));
 
 const EventEmitter = events.EventEmitter;
 
-module.exports = class Humidity extends EventEmitter {
+class Humidity extends EventEmitter {
   constructor (options) {
     super();
 
@@ -81,4 +81,6 @@ module.exports = class Humidity extends EventEmitter {
       this.emit('error', `${this.options.name} | socket error: ${err.toString('utf8')}`);
     });
   }
-};
+}
+
+module.exports = Humidity;

@@ -6,8 +6,8 @@ const neo = require(path.join(__dirname, '../src/matrix/'));
 
 const speechToText = new neo.SpeechToText({
   projectId: 'limbus-v2',
-  device: 'default',
-  recordProgram: 'rec',
+  device: 'mic_channel0',
+  recordProgram: 'arecord',
   language: 'de-DE'
 });
 

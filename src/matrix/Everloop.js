@@ -10,7 +10,7 @@ const config = require(path.join(process.cwd(), '.neoconfig.json'));
 
 const EventEmitter = events.EventEmitter;
 
-module.exports = class Everloop extends EventEmitter {
+class Everloop extends EventEmitter {
   constructor (options) {
     super();
 
@@ -208,4 +208,6 @@ module.exports = class Everloop extends EventEmitter {
       this.emit('error', `${this.options.name} | socket error: ${err.toString('utf8')}`);
     });
   }
-};
+}
+
+module.exports = Everloop;

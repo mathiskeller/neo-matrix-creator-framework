@@ -18,7 +18,7 @@ Neo is a framework that makes it easy to set up your own Matrix Creator project 
 ## Dependencies
 
 - This framework is using [ZMQ](https://www.npmjs.com/package/zmq), make sure you follow the instructions on how to install ZMQ on your computer.
-- If you want to use the SpeecToText module you need to have SOX installed. See the [node-record-lpcm16](https://www.npmjs.com/package/node-record-lpcm16) documentation
+- If you want to use the SpeechToText module you need to have SOX installed. See the [node-record-lpcm16](https://www.npmjs.com/package/node-record-lpcm16) documentation
 
 ## Installation
 
@@ -81,7 +81,10 @@ The following example shows how to use the GPIO module to toggle the Everloop LE
 
 ```javascript
 // Define pin0 as a button with the name 'light-switch'
-gpio.button(0, 'light-switch');
+gpio.button({
+  pin: 0,
+  name: 'light-switch'
+});
 
 // listen to events form light-switch
 gpio.on('light-switch', state => {

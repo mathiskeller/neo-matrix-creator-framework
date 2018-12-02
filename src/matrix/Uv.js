@@ -10,7 +10,7 @@ const config = require(path.join(process.cwd(), '.neoconfig.json'));
 
 const EventEmitter = events.EventEmitter;
 
-module.exports = class Uv extends EventEmitter {
+class Uv extends EventEmitter {
   constructor (options) {
     super();
 
@@ -77,4 +77,6 @@ module.exports = class Uv extends EventEmitter {
       this.emit('error', `${this.options.name} | socket error: ${err.toString('utf8')}`);
     });
   }
-};
+}
+
+module.exports = Uv;

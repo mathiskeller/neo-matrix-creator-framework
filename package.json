@@ -1,6 +1,6 @@
 {
   "name": "neo-matrix-creator-framework",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Neo is a Framework that makes it easy to set up your own Matrix Creator project using Node.js.",
   "keywords": [
     "Internet of Things",

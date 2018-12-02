@@ -8,8 +8,6 @@ const neo = require('neo-matrix-creator-framework');
 const gpio = new neo.Gpio();
 ```
 
-
-
 ## Options
 
 The default options can be found in the constructor of the module and can be customized by using the options object when initializing the module.
@@ -24,10 +22,6 @@ const gpio = new neo.Gpio({
   pingInterval: 2000
 });
 ```
-
-
-
-
 
 ## Parameters
 
@@ -47,19 +41,13 @@ A pin object stores all the information about the pin:
 }
 ```
 
-
-
-
-
 ## Methods
 
 ```javascript
-gpio.button(index, name) // registers a new button (index = pin number)
-gpio.setOutputPin(index, type, name) // updates/creates an output pin
-gpio.setInputPin() // Registers a new input pin
+gpio.button({ pin, name }) // registers a new button (index = pin number)
+gpio.setOutputPin({ pin, type, name, value }) // updates/creates an output pin
+gpio.setInputPin({ pin, type, name }) // Registers a new input pin
 ```
-
-
 
 #### setInputPin()
 
@@ -69,27 +57,30 @@ When registering an input pin it's value is emitted by the basic event emitter o
 - it's value
 
 ```javascript
-gpio.setInputPin(1, 'touch-sensor', 'light-switch');
+gpio.setInputPin({
+  pin: 1,
+  type: 'touch-sensor',
+  name: 'touch'
+});
 
-gpio.on('pin_1', data => {
+gpio.on('touch', data => {
   console.log(`${data.pin}: ${data.value}`);
 })
 ```
-
-
 
 #### setOutputPin()
 
 Everytime you want to change an output pin you have to set it's value.
 
 ```javascript
-// Switch of the Status LED
-gpio.setOutputPin(3, 'LED', 'StatusLED', 0);
-
-// Switch on the Status LED
-gpio.setOutputPin(3, 'LED', 'StatusLED', 1);
+// Switch to value 0
+gpio.setOutputPin({
+  pin: 3,
+  type: 'LED',
+  name: 'pin',
+  value: 0
+});
 ```
-
 
 
 #### button()
@@ -97,9 +88,9 @@ gpio.setOutputPin(3, 'LED', 'StatusLED', 1);
 After the register of a button you can use it's event emitter to listen to it's event which emits the buttons state ("pressed" or "released")
 
 ```javascript
-gpio.button(0, 'light-switch');
+gpio.button(0, 'switch');
 
-gpio.on('light-switch', state => {
+gpio.on('switch', state => {
   if (state === 'pressed') {
     console.log('button pressed');
   } else {
@@ -115,8 +106,12 @@ gpio.on('light-switch', state => {
 You can use the `button()` method as a blueprint to create your own custom Input/Output pins.
 
 ```Javascript
-  button (index, name) {
-    this.setInputPin(index, 'button', name);
+  button ({ pin, name }) {
+    this.setInputPin({
+      pin,
+      type: 'button',
+      name
+    });
 
     this.on('pin_change', res => {
       // skip if pin isn't a button

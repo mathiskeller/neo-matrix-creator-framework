@@ -10,7 +10,10 @@ const gpio = new neo.Gpio();
 const everloop = new neo.Everloop();
 
 // Register button on gpio pin 0
-gpio.button(0, 'light-switch');
+gpio.button({
+  pin: 0,
+  name: 'light-switch'
+});
 
 // listen on light-switch
 gpio.on('light-switch', state => {

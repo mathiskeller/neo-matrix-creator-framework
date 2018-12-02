@@ -10,7 +10,7 @@ const config = require(path.join(process.cwd(), '.neoconfig.json'));
 
 const EventEmitter = events.EventEmitter;
 
-module.exports = class Gpio extends EventEmitter {
+class Gpio extends EventEmitter {
   constructor (options) {
     super();
 
@@ -40,8 +40,12 @@ module.exports = class Gpio extends EventEmitter {
     return `${this.options.name} initialized`;
   }
 
-  button (index, name) {
-    this.setInputPin(index, 'button', name);
+  button ({ pin, name }) {
+    this.setInputPin({
+      pin,
+      type: 'button',
+      name
+    });
 
     this.on('pin_change', res => {
       // skip if pin isn't a button
@@ -61,10 +65,10 @@ module.exports = class Gpio extends EventEmitter {
     });
   }
 
-  setOutputPin (index, type, name, value) {
+  setOutputPin ({ pin, type, name, value }) {
     // Create GPIO Params
     const gpioParams = matrixIo.malos.v1.io.GpioParams.create({
-      pin: index,
+      pin,
       mode: matrixIo.malos.v1.io.GpioParams.EnumMode.OUTPUT,
       value
     });
@@ -76,21 +80,21 @@ module.exports = class Gpio extends EventEmitter {
     this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(driverConfig).finish());
 
     // update pin array
-    this.PINS[`pin_${index}`] = {
-      index,
+    this.PINS[`pin_${pin}`] = {
+      pin,
       mode: gpioParams.mode,
       type,
       name,
       value
     };
 
-    return `${this.options.name} | Updated Output Pin: ${JSON.stringify(this.PINS[`pin_${index}`])}`;
+    return `${this.options.name} | Updated Output Pin: ${JSON.stringify(this.PINS[`pin_${pin}`])}`;
   }
 
-  setInputPin (index, type, name) {
+  setInputPin ({ pin, type, name }) {
     // Create GPIO Params
     const gpioParams = matrixIo.malos.v1.io.GpioParams.create({
-      pin: index,
+      pin,
       mode: matrixIo.malos.v1.io.GpioParams.EnumMode.INPUT,
       value: 0
     });
@@ -103,15 +107,15 @@ module.exports = class Gpio extends EventEmitter {
 
     this.configSocket.send(matrixIo.malos.v1.driver.DriverConfig.encode(driverConfig).finish());
 
-    this.PINS[`pin_${index}`] = {
-      index,
+    this.PINS[`pin_${pin}`] = {
+      pin,
       mode: gpioParams.mode,
       type,
       name,
       value: 0
     };
 
-    return `${this.options.name} | Registered Input Pin: ${JSON.stringify(this.PINS[`pin_${index}`])}`;
+    return `${this.options.name} | Registered Input Pin: ${JSON.stringify(this.PINS[`pin_${pin}`])}`;
   }
 
   ping () {
@@ -170,4 +174,6 @@ module.exports = class Gpio extends EventEmitter {
     return (dec >>> 0).toString(2);
   }
   /*  eslint-enable */
-};
+}
+
+module.exports = Gpio;

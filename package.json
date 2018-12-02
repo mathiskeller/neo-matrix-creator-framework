@@ -17,7 +17,7 @@
   "author": "Mathis Keller <mk@mathiskeller.de> (http://mathiskeller.de)",
   "repository": {
     "type": "git",
-    "url": "git@github.com:mathiskeller/matrix-creator-node-framework.git"
+    "url": "git@github.com:mathiskeller/neo-matrix-creator-framework.git"
   },
   "license": "MIT",
   "devDependencies": {

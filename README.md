@@ -22,10 +22,10 @@ Neo is a framework that makes it easy to set up your own Matrix Creator project 
 
 ## Installation
 
-Install via npm directly from GitHub
+Install via npm
 
 ```
-npm install git+https://github.com/mathiskeller/neo-matrix-creator-framework
+npm i neo-matrix-creator-framework
 ```
 
 ### Setting up a config file
